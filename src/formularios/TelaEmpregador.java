@@ -37,6 +37,7 @@ public class TelaEmpregador extends javax.swing.JFrame {
 //    private JButton jButtonCalculaINSS;
 //    private JLabel jLabelINSS;
 //    private JFormattedTextField jFormattedTextFieldSalCVenc1;
+      private int idColab;
 
     /**
      * Creates new form TelaColaborador
@@ -880,13 +881,13 @@ public class TelaEmpregador extends javax.swing.JFrame {
             Setor set = new Setor(idSetor, setor);
             setDAO.inserir(set);
             
-            //CargoDAO carDAO = new CargoDAO(conn); 
-            //Cargo car = new Cargo(idCargo, cargo);
-            //carDAO.inserir(car);
+//            CargoDAO carDAO = new CargoDAO(conn); 
+//            Cargo car = new Cargo(cargo, s, b);
+//            carDAO.inserir(car);
             
             ColaboradorDAO colabDAO = new ColaboradorDAO(conn);
             Colaborador colab = new Colaborador(nome, cpf, idCargo, idSetor);
-            colabDAO.inserir(colab);
+            this.idColab=colabDAO.inserir(colab);
 
             JOptionPane.showMessageDialog(this, "Colaborador salvo com sucesso!");
         } catch (SQLException ex) {
@@ -919,11 +920,10 @@ public class TelaEmpregador extends javax.swing.JFrame {
         // Incrementar o próximo ID
         nextId++;
                    
-        // Pegar os dados dos JTextFields
+         // Pegar os dados dos JTextFields
         String nome = jTextFieldNomeDependente.getText();
         String cpf = jFormattedTextFieldCPFDepend.getText();
         String dataNascimento = jTextFieldNomeDependente.getText();
-        //int idGerado = DependenteDAO.inserir();
         
 
         // Verificar se todos os campos estão preenchidos
@@ -938,9 +938,9 @@ public class TelaEmpregador extends javax.swing.JFrame {
             
             conn = (Connection) DriverManager.getConnection("jdbc:sqlite:src/data/folha_pagamento.db");
             
-            //DependenteDAO dependenteDAO= new DependenteDAO(conn); 
-            //Dependente dependente = new Dependente(nome, cpf, dataNascimento, idGerado);
-            //dependenteDAO.inserir(dependente);
+            DependenteDAO dependenteDAO= new DependenteDAO(conn); 
+            Dependente dependente = new Dependente(nome, cpf, dataNascimento, this.idColab);
+            dependenteDAO.inserir(dependente);
             
             JOptionPane.showMessageDialog(this, "Colaborador salvo com sucesso!");
             

@@ -24,7 +24,7 @@ public class DependenteDAO extends GenericDAO{
     }
 
     public int inserir(Dependente dependente)  throws SQLException {
-        String sql = "INSERT INTO dependente (nome, cpf, data_nasc, id_colab) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO depedente (nome, cpf, data_nasc, id_colab) VALUES (?,?,?,?)";
         try ( PreparedStatement stmste = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             stmste.setString(1, dependente.getNome());
             stmste.setString(2, dependente.getCpf());
@@ -42,7 +42,7 @@ public class DependenteDAO extends GenericDAO{
             }
             
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Ocorreu um erro no método inserir, classe ColaboradorDAO: " + ex);
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro no método inserir, classe DependenteDAO: " + ex);
                 return -1; // Retorna -1 se houver falha
             }
     }
