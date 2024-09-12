@@ -4,80 +4,72 @@
  */
 package pdf;
 
-import com.sun.jdi.connect.spi.Connection;
+import java.sql.Connection;
 import dao.GenericDAO;
+import java.io.File;
 import java.io.IOException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
-
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
+import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
+
 /**
  *
  * @author 1_DEV
  */
 public class GerarPDF extends GenericDAO {
-    
-     public static void main(String[] args) {
-        
+
+    private Connection conn;
+
+    // Construtor que recebe a conexão
+    public GerarPDF(Connection conn) {
+        this.conn = conn;
+    }
+
+    // Método para gerar o PDF ao clicar no botão
+    public void gerarFolhaPagamentoPDF() {
         PDDocument document = new PDDocument();
-        
-        Connection conn = null;
+        String sql = "SELECT nome, cpf FROM colaborador";
 
-        try {
-            // Conectando ao banco de dados
-            conn = DriverManager.getConnection("jdbc:sqlite:src/data/folha_pagamento.db");
-            String sql = "SELECT nome, cpf, id_cargo, id_setor FROM colaborador";
+        try ( PreparedStatement stmste = conn.prepareStatement(sql);  
+                ResultSet resultSet = stmste.executeQuery()) {
 
-            PreparedStatement statement = conn.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery();
-
-            // Criando uma nova página no documento PDF
+            PDFont font = PDType0Font.load(document, new File("src/fonts/arial.ttf"));
             PDPage page = new PDPage();
             document.addPage(page);
 
-            PDPageContentStream contentStream = new PDPageContentStream(document, page);
+            try ( PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
+                contentStream.setFont(font, 12);
+                contentStream.beginText();
+                contentStream.newLineAtOffset(100, 700);
 
-            // Definindo a fonte e o tamanho do texto
-            contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
-            contentStream.beginText();
-            contentStream.newLineAtOffset(100, 700);
-
-            // Escrevendo o cabeçalho da folha de pagamento
-            contentStream.showText("Folha de Pagamento");
-            contentStream.newLineAtOffset(0, -20);
-
-            // Escrevendo os dados do banco de dados no PDF
-            while (resultSet.next()) {
-                String nome = resultSet.getString("nome");
-                String cargo = resultSet.getString("cargo");
-                double salario = resultSet.getDouble("salario");
-
-                contentStream.showText("Nome: " + nome);
+                
+                contentStream.showText("Folha de Pagamento");
                 contentStream.newLineAtOffset(0, -20);
-                contentStream.showText("Cargo: " + cargo);
-                contentStream.newLineAtOffset(0, -20);
-                contentStream.showText("Salário: " + salario);
-                contentStream.newLineAtOffset(0, -40); // Espaço entre registros
+
+                while (resultSet.next()) {
+                    String nome = resultSet.getString("nome");
+                    String cpf = resultSet.getString("cpf");
+
+                    contentStream.showText("Nome: " + nome);
+                    contentStream.newLineAtOffset(0, -20);
+                    contentStream.showText("Cargo: " + cpf);
+                    contentStream.newLineAtOffset(0, -20);
+                }
+
+                contentStream.endText();
             }
 
-            contentStream.endText();
-            contentStream.close();
-
-            // Salvando o PDF no disco
-            document.save("folha_pagamento.pdf");
-            System.out.println("Folha de pagamento gerada com sucesso!");
+            document.save("src/relatorios/folha_pagamento1.pdf");
+            System.out.println("PDF gerado com sucesso!");
 
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
-                if (conn != null) {
-                    conn.close();
-                }
                 if (document != null) {
                     document.close();
                 }
@@ -87,3 +79,4 @@ public class GerarPDF extends GenericDAO {
         }
     }
 
+}

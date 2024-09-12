@@ -8,6 +8,7 @@ package formularios;
 import classes.Cargo;
 import classes.Colaborador;
 import classes.Dependente;
+import classes.Empresa;
 import classes.Setor;
 import dao.CargoDAO;
 import dao.ColaboradorDAO;
@@ -28,6 +29,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import pdf.GerarPDF;
 /**
  *
  * @author 1_DEV
@@ -128,6 +130,7 @@ public class TelaEmpregador extends javax.swing.JFrame {
         jTextFieldNomeDependente = new javax.swing.JTextField();
         jLabelAuxilio = new javax.swing.JLabel();
         jLabelCpfDepen2 = new javax.swing.JLabel();
+        jButtonPDF = new javax.swing.JButton();
 
         jButtonSalvarColaborador2.setBackground(new java.awt.Color(255, 255, 255));
         jButtonSalvarColaborador2.setForeground(new java.awt.Color(0, 0, 0));
@@ -792,6 +795,17 @@ public class TelaEmpregador extends javax.swing.JFrame {
                 .addGap(12, 12, 12))
         );
 
+        jButtonPDF.setBackground(new java.awt.Color(255, 255, 255));
+        jButtonPDF.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButtonPDF.setForeground(new java.awt.Color(0, 0, 0));
+        jButtonPDF.setText("Imprimir");
+        jButtonPDF.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButtonPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPDFActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -805,19 +819,19 @@ public class TelaEmpregador extends javax.swing.JFrame {
                         .addGap(42, 42, 42)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(56, 56, 56)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonVoltar)
-                        .addGap(245, 245, 245))
+                    .addComponent(jPanelSalarioComVencimentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(11, 11, 11)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGap(11, 11, 11)
-                                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jPanelSalarioComVencimentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(67, Short.MAX_VALUE))))
+                                .addComponent(jButtonVoltar)
+                                .addGap(84, 84, 84)
+                                .addComponent(jButtonPDF)
+                                .addGap(10, 10, 10))
+                            .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -831,7 +845,9 @@ public class TelaEmpregador extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addContainerGap(23, Short.MAX_VALUE)
-                        .addComponent(jButtonVoltar)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonVoltar)
+                            .addComponent(jButtonPDF))
                         .addGap(28, 28, 28)))
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -847,17 +863,13 @@ public class TelaEmpregador extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         pack();
@@ -1306,6 +1318,33 @@ public class TelaEmpregador extends javax.swing.JFrame {
     private void jTextFieldHoraExtraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldHoraExtraActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldHoraExtraActionPerformed
+
+    private void jButtonPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPDFActionPerformed
+        Connection conn = null;
+        try {
+        // Conecte ao banco de dados
+        conn = (Connection) DriverManager.getConnection("jdbc:sqlite:src/data/folha_pagamento.db");
+
+        GerarPDF empDAO = new GerarPDF(conn);
+        // Salve no banco de dados
+        empDAO.gerarFolhaPagamentoPDF();
+
+        // Mostre mensagem de sucesso
+        JOptionPane.showMessageDialog(null, "Usuário salvo com sucesso!");
+        } catch (Exception e) {          
+           JOptionPane.showMessageDialog(null, "Erro ao salvar usuário!", "Erro", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                if (conn != null) {
+                conn.close();
+            }
+            } catch (Exception ex) {
+                Logger.getLogger(TelaCadastrar.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        
+    }//GEN-LAST:event_jButtonPDFActionPerformed
     private void calcularHorasExtras() {
     // Obtenha o texto do JLabel, remova "R$" e substitua a vírgula por ponto
     String textoSalario = jLabelSalarioBruto.getText().replace("R$", "").replace(",", ".");
@@ -1540,6 +1579,7 @@ public class TelaEmpregador extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAdicionar;
     private javax.swing.JButton jButtonEditarColaborador2;
     private javax.swing.JButton jButtonEditarVencimentos;
+    private javax.swing.JButton jButtonPDF;
     private javax.swing.JButton jButtonSalvarColaborador;
     private javax.swing.JButton jButtonSalvarColaborador2;
     private javax.swing.JButton jButtonSalvarDepen1;

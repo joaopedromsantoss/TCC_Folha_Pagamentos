@@ -1,0 +1,6 @@
+SELECT 
+co.nome, co.cpf, ca.cargo 
+FROM 
+colaborador co
+JOIN cargo ca ON co.id_cargo = ca.id_cargo
+WHERE co.id_colab = 1
