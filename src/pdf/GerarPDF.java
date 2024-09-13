@@ -56,7 +56,7 @@ public class GerarPDF extends GenericDAO {
 
                     contentStream.showText("Nome: " + nome);
                     contentStream.newLineAtOffset(0, -20);
-                    contentStream.showText("Cargo: " + cpf);
+                    contentStream.showText("CPF: " + cpf);
                     contentStream.newLineAtOffset(0, -20);
                 }
 
