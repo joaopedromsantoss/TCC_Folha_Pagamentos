@@ -3,9 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/1_DEV/Documents/Backup/TCC_Folha_Pagamentos/src/formularios/TelaCadastrar.java</file>
-            <file>file:/C:/Users/1_DEV/Documents/Backup/TCC_Folha_Pagamentos/src/pdf/CriarPdf.java</file>
-            <file>file:/C:/Users/1_DEV/Documents/Backup/TCC_Folha_Pagamentos/src/impressao/GerarPDF.java</file>
+            <file>file:/C:/Users/1_DEV/Documents/Backup/TCC_Folha_Pagamentos/src/pdf/GerarPDF.java</file>
+            <file>file:/C:/Users/1_DEV/Documents/Backup/TCC_Folha_Pagamentos/src/formularios/TelaEmpregador.java</file>
         </group>
     </open-files>
 </project-private>
